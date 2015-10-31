@@ -19,21 +19,35 @@
 
 (ns crispy-tatertot.handler
   (:require [compojure.api.sweet :refer :all]
+            [compojure.route :as r]
             [ring.util.http-response :refer :all]
-            [schema.core :as s]))
+            [schema.core :as s]
+            [clj-slack.chat :as slack]))
 
-(s/defschema Message {:message String})
+(def slack-connection {:api-url "https://slack.com/api" :token "YOUR TOKEN"})
+
+(defn wrap-dir-index [handler]
+  (fn [req]
+    (handler
+      (update-in req [:uri]
+                 #(if (= "/" %) "/index.html" %)))))
 
 (defapi app
-  (swagger-ui)
+  (swagger-ui
+    "/swagger-ui"
+    :swagger-docs "/swagger-docs")
   (swagger-docs
-    {:info {:title "Fuzzy Bunnies"
-            :description "Travis is awesome"}
-     :tags [{:name "hello", :description "says hello in Finnish"}]})
-  (context* "/hello" []
-    :tags ["hello"]
-    (GET* "/" []
-      :return Message
-      :query-params [name :- String]
-      :summary "say hello"
-      (ok {:message (str "Terve, " name)}))))
+    "/swagger-docs"
+    {:info {:title       "Crispy Tater Tots' API"
+            :description "Secure coaching communications over the internet"}
+     :tags [{}]})
+
+  (middlewares [wrap-dir-index]
+    (context* "/api/v1" []
+      :tags ["APIs"]
+
+      (POST* "/getnotified" []
+        :return String
+        :form-params [email :- String]
+        (ok "Success")))
+    (r/resources "/")))
