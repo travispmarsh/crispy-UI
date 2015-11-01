@@ -20,15 +20,21 @@
 $(document).ready(function () {
   var times = 0;
   $('#notify-form').submit(function (e) {
+    $("#notifyBtn").attr("disabled", true);
+
     var emailAddress = $("#email").val();
     $.ajax({
       method: "post",
       url: "/api/v1/getnotified",
       data: {email: emailAddress}
     }).done(function(result) {
-      console.log("done", result);
+      $("#notify").hide(0, function() {
+        $("#notify-success").show(0);
+      });
+    }).fail(function() {
+      $("#notifyBtn").attr("disabled", false);
+      alert("Sorry, but we were unable to complete your request. Please try again later.");
     });
     return false;
   });
-  console.log("hi");
 });

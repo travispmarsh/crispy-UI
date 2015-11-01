@@ -26,6 +26,11 @@ h1 {
   text-align: center;
 }
 
+.panel-heading {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
 @media (max-width: 766px) {
   .jumbotron {
     padding: 20px;

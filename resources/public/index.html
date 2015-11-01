@@ -33,12 +33,13 @@
 <body>
 
 <div class="get-notified container">
+  <h1>Courage Labs, LLC</h1>
   <div class="main-content">
-
-    <h1>Courage Labs, LLC</h1>
-
-    <div class="jumbotron">
-      <h2>Get Help from a Coach</h2>
+    <div id="notify" class="panel panel-default">
+      <div class="panel-heading">
+        Get the Motivation You Need
+      </div>
+      <div class="panel-body">
 
       <p>
         We're building the next generation of asynchronous text-based
@@ -51,9 +52,19 @@
           <input type="email" class="form-control" id="email"
                  placeholder="Email">
         </div>
-        <button type="submit" class="btn btn-lg btn-primary">Notify Me
-        </button>
+        <button id="notifyBtn" type="submit"
+                class="btn btn-lg btn-primary">Notify Me</button>
       </form>
+      </div>
+    </div>
+
+    <div id="notify-success" class="panel panel-success" style="display:none">
+      <div class="panel-heading">
+        Success!
+      </div>
+      <div class="panel-body">
+        We'll let you know when we are up and running.
+      </div>
     </div>
   </div>
 </div>
