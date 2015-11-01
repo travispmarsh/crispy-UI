@@ -19,10 +19,12 @@
 
 (ns crispy-tatertot.handler
   (:require [compojure.api.sweet :refer :all]
+            [compojure.handler :refer [site]]
             [compojure.route :as r]
+            [org.httpkit.server :as srv]
             [ring.util.http-response :refer :all]
-            [schema.core :as s]
-            [clj-slack.chat :as chat]))
+            [clj-slack.chat :as chat])
+  (:gen-class))
 
 (defn env [key]
   (let [val (System/getenv key)]
@@ -65,3 +67,7 @@
                             :attachments [{:text email}]})
         (ok "Success")))
     (r/resources "/")))
+
+(defn -main [& [port]]
+  (let [port (Integer/parseInt (env "PORT"))]
+    (srv/run-server (site #'app) {:port port})))

@@ -24,9 +24,11 @@
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [clj-time "0.9.0"] ; required due to bug in lein-ring
+                 [http-kit "2.1.18"]
                  [metosin/compojure-api "0.22.0"]
                  [org.julienxx/clj-slack "0.5.1"]]
   :ring {:handler crispy-tatertot.handler/app}
   :uberjar-name "server.jar"
   :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]]
-                   :plugins [[lein-ring "0.9.6"]]}})
+                   :plugins [[lein-ring "0.9.6"]]}
+             :uberjar {:aot :all}})
