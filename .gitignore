@@ -1,3 +1,6 @@
 /.lein-repl-history
 .idea
 /target
+.floo
+.flooignore
+.lein-failures
