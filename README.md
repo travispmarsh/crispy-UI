@@ -2,6 +2,8 @@
 
 A program to facilitate secure, motivational internet conversations.
 
+[![Build Status](https://travis-ci.org/couragelabs/crispy-tatertot.svg?branch=master)](https://travis-ci.org/couragelabs/crispy-tatertot)
+
 ## Usage
 
 ### Run the application locally
