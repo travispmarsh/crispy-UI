@@ -18,7 +18,9 @@
 ;
 
 (defproject crispy-tatertot "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
+  :description
+  "A simple application for facilitating confidential, motivating conversations"
+
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [clj-time "0.9.0"] ; required due to bug in lein-ring
                  [metosin/compojure-api "0.22.0"]

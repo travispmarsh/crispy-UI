@@ -22,9 +22,18 @@
             [compojure.route :as r]
             [ring.util.http-response :refer :all]
             [schema.core :as s]
-            [clj-slack.chat :as slack]))
+            [clj-slack.chat :as chat]))
 
-(def slack-connection {:api-url "https://slack.com/api" :token "YOUR TOKEN"})
+(defn env [key]
+  (let [val (System/getenv key)]
+    (if-not val (throw (IllegalStateException.
+                         (format "Environment variable missing: %s" key))))
+    val))
+
+(def connection {:api-url "https://slack.com/api"
+                 :token   (env "CRISPY_SLACK_TOKEN")})
+
+(def channel (env "CRISPY_SLACK_CHANNEL"))
 
 (defn wrap-dir-index [handler]
   (fn [req]
@@ -49,5 +58,10 @@
       (POST* "/getnotified" []
         :return String
         :form-params [email :- String]
+        (chat/post-message connection channel
+                           "New Signup!"
+                           {:username    "tater-bot"
+                            :icon_emoji  ":envelope:"
+                            :attachments [{:text email}]})
         (ok "Success")))
     (r/resources "/")))

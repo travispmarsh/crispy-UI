@@ -24,9 +24,19 @@ body {
 h1 {
   font-family: "Lusitana", serif;
   text-align: center;
-  margin-bottom: 40px;
 }
 
-.get-notified {
-  margin-top: 20px;
+@media (max-width: 766px) {
+  .jumbotron {
+    padding: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
