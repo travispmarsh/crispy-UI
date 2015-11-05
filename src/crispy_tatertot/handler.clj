@@ -44,11 +44,9 @@
                  #(if (= "/" %) "/index.html" %)))))
 
 (defapi app
-  (swagger-ui
-    "/swagger-ui"
+  (swagger-ui "/swagger-ui"
     :swagger-docs "/swagger-docs")
-  (swagger-docs
-    "/swagger-docs"
+  (swagger-docs "/swagger-docs"
     {:info {:title       "Crispy Tater Tots' API"
             :description "Secure coaching communications over the internet"}
      :tags [{}]})
