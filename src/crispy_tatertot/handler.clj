@@ -22,20 +22,28 @@
             [compojure.handler :refer [site]]
             [compojure.route :as r]
             [org.httpkit.server :as srv]
+            [ring.middleware.session :as session]
             [ring.util.http-response :refer :all]
-            [clj-slack.chat :as chat])
+            [clj-slack.chat :as chat]
+            [crispy-tatertot.persona :as persona])
   (:gen-class))
 
-(defn env [key]
+(defn env-or [key f]
   (let [val (System/getenv key)]
-    (if-not val (throw (IllegalStateException.
-                         (format "Environment variable missing: %s" key))))
-    val))
+    (if-not val (f) val)))
+
+(defn env
+  ([key] (env-or key #(throw (IllegalStateException.
+                               (format "Environment variable missing: %s"
+                                       key)))))
+  ([key default-value] (env-or key #(identity default-value))))
 
 (def connection {:api-url "https://slack.com/api"
                  :token   (env "CRISPY_SLACK_TOKEN")})
 
-(def channel (env "CRISPY_SLACK_CHANNEL"))
+(def channel (env "CRISPY_SLACK_CHANNEL" "#dev-signups"))
+
+(def audience (env "PERSONA_AUDIENCE" "http://localhost:3000"))
 
 (defn wrap-dir-index [handler]
   (fn [req]
@@ -51,9 +59,36 @@
             :description "Secure coaching communications over the internet"}
      :tags [{}]})
 
-  (middlewares [wrap-dir-index]
+  (middlewares [wrap-dir-index session/wrap-session]
     (context* "/api/v1" []
       :tags ["APIs"]
+
+      (context* "/session" []
+        :tags ["User Session"]
+
+        (GET* "/" {:keys [session]}
+          :return String
+          :summary "Get user associated with current session"
+          (let [identity (::identity session)]
+            (if identity
+              (ok (:emailAddress identity))
+              (not-found))))
+
+        (POST* "/" {:keys [session] :as thing}
+          :return String
+          :form-params [assertion :- String]
+          :summary "Establish a session"
+          (let [{:keys [email] :as response}
+                (persona/verify-assertion assertion audience)]
+
+            (if (persona/valid? response)
+              (merge {:session (assoc session ::identity {:emailAddress email})}
+                     (ok email))
+              (unauthorized))))
+
+        (DELETE* "/" []
+          :summary "Destroy the current session, if it exists"
+          (merge (ok) {:session {}})))
 
       (POST* "/getnotified" []
         :return String
