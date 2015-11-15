@@ -22,7 +22,6 @@ function module($, navigator) {
       sessionUrl = '/api/v1/session';
 
   function load(loginCallback, logoutCallback) {
-    console.log([loginCallback, logoutCallback]);
     function onLogout() {
       currentUser = null;
       logoutCallback();
