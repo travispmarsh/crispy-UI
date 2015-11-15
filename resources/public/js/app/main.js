@@ -25,10 +25,8 @@ function main($, R, v, getNotified, auth, routing) {
         loginBtnSelector = "#login-btn";
 
     auth.load({
-      login: function (currentUser) {
-        v.hideThenShow(loginBtnSelector, logoutBtnSelector);
-        return false;
-      },
+      login: R.compose(R.F, R.partial(v.hideThenShow,
+          loginBtnSelector, logoutBtnSelector)),
       logout: R.partial(v.hideThenShow, logoutBtnSelector,
           loginBtnSelector),
       fail: v.critFail
@@ -50,7 +48,7 @@ function main($, R, v, getNotified, auth, routing) {
             started: R.partial(v.disabled, notifyBtnSelector, true),
             success: R.partial(v.hideThenShow, "#notify", "#notify-success"),
             failed: R.partial(v.critFailed("Sorry, but we were unable to " +
-                "complete your request. Please try again later."),
+                    "complete your request. Please try again later."),
                 R.partial(v.disabled, notifyBtnSelector, false))
           }),
       rules: {emailAddress: {required: true, email: true}}
@@ -63,4 +61,4 @@ function main($, R, v, getNotified, auth, routing) {
 }
 
 require(["jquery", "ramda", "app/viewFn", "app/getNotified",
-  "app/auth", "app/routing"], main);
+  "app/auth", "app/routing", "jquery.validate"], main);

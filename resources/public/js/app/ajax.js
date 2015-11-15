@@ -17,13 +17,25 @@
  * along with Crispy Tatertot.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function module(a) {
-  return {"submitNotification": function(args) {
-    a.post("/api/v1/getnotified", {
-      beforeSend: args.started, data: {email: args.fetchEmail}
-    }).done(args.success).fail(args.fail);
-    return false;
-  }};
+
+function module($, R) {
+
+  /**
+   * Reducing $.ajax boilerplate.
+   *
+   * @param type Argument to "type" arg
+   * @param url Argument to "url" arg
+   * @param args Other args
+   */
+  function ajax(type, url, args) {
+    return $.ajax(R.merge({type: type, url: url}, args));
+  }
+
+  return {
+    "post": R.partial(ajax, "POST"),
+    "get": R.partial(ajax, "GET"),
+    "delete": R.partial(ajax, "DELETE")
+  };
 }
 
-define(["app/ajax"], module);
+define(["jquery", "ramda"], module);

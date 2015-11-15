@@ -17,54 +17,53 @@
  * along with Crispy Tatertot.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function module($, navigator) {
+function module($, navigator, a) {
   var currentUser = null,
       sessionUrl = '/api/v1/session';
 
-  function load(data) {
+  function load(args) {
     function onLogin(user) {
       currentUser = user;
-      data.login(user);
+      args.login(user);
     }
 
     function onLogout() {
       currentUser = null;
-      data.logout();
+      args.logout();
     }
 
-    $.ajax({url: sessionUrl}).always(function (result, status, err) {
+    a.get(sessionUrl).always(function (result, status, err) {
       if (status === "success") {
         onLogin(result);
       } else if (result.status !== 404) {
         console.log("Error connecting",
             {result: result, status: status, err: err});
-        data.fail("Server connection failed. Please try again later.");
+        args.fail("Server connection failed. Please try again later.");
         return false;
       }
 
       navigator.id.watch({
         loggedInUser: currentUser,
         onlogin: function (assertion) {
-          $.ajax({
-            type: 'POST', url: sessionUrl, data: {assertion: assertion},
+          a.post(sessionUrl, {
+            data: {assertion: assertion},
             success: function (res, status, xhr) {
               onLogin(res);
               this.loggedInUser = res;
             },
             error: function (xhr, status, err) {
               navigator.id.logout();
-              data.fail("Unable to login. Please try again later.");
+              args.fail("Unable to login. Please try again later.");
             }
           });
         },
         onlogout: function () {
-          $.ajax({
-            type: 'DELETE', url: sessionUrl,
+          a.delete(sessionUrl, {
             success: function (res, status, xhr) {
               onLogout();
             },
             error: function (xhr, status, err) {
-              data.fail("Unable to logout. Please try again later.");
+              args.fail("Unable to logout. Please try again later.");
             }
           });
         }
@@ -89,4 +88,4 @@ function module($, navigator) {
   };
 }
 
-define(["jquery", "persona"], module);
+define(["jquery", "persona", "app/ajax"], module);
