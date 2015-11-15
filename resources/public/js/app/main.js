@@ -22,17 +22,19 @@ function main($, R, v, getNotified, auth, routing) {
 
   function authView() {
     var logoutBtnSelector = "#logout-btn",
-        loginBtnSelector = "#login-btn";
+        loginBtnSelector = "#login-btn",
+        loggedInVisibleSelector = ".logged-in-visible",
+        loggedOutVisibleSelector = ".logged-out-visible";
 
     auth.load({
-      login: R.compose(R.F, R.partial(v.hideThenShow,
-          loginBtnSelector, logoutBtnSelector)),
-      logout: R.partial(v.hideThenShow, logoutBtnSelector,
-          loginBtnSelector),
+      login: R.compose(R.F, R.partial(v.hideThenShow, loggedOutVisibleSelector,
+          loggedInVisibleSelector)),
+      logout: R.partial(v.hideThenShow, loggedInVisibleSelector,
+          loggedOutVisibleSelector),
       fail: v.critFail
     });
 
-    v.onClick(loginBtnSelector, R.partial(auth.login));
+    v.onClick(".login", R.partial(auth.login));
     v.onClick(logoutBtnSelector,
         v.confirmed("Are you sure you want to log out?",
             R.partial(auth.logout)));

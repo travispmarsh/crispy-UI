@@ -92,22 +92,58 @@
           <li class="active home-nav"><a href="#home">Home</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li id="logout-btn" style="display:none"><a
+          <li id="logout-btn" class="logged-in-visible" style="display:none"><a
               href="#">Logout</a></li>
-          <li id="login-btn" style="display:none"><a
-              href="#">Login</a></li>
+          <li id="login-btn" class="logged-out-visible login"
+              style="display:none"><a href="#">Login</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <div class="main">
-    <div class="container">
-      <div class="col-lg-2 col-md-2 col-sm-2 left-panel">
-        left
+  <div id="coaching-intro" class="container logged-out-visible">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Please Login
       </div>
-      <div class="col-lg-10 col-md-10 col-sm-10">
-        main
+      <div class="panel-body">
+
+        <p>
+          In order to engage with a coach, you must be logged in.
+          <a href="#" class="login">Login now</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="coaching-content" class="main logged-in-visible"
+       style="display:none">
+    <div class="container-fluid">
+      <div class="col-lg-3 col-md-3 col-sm-3 left-panel conversation-list">
+        <button type="button"
+                class="btn btn-sm btn-primary new-conversation">New Conversation
+        </button>
+      </div>
+
+      <div class="col-lg-9 col-md-9 col-sm-9">
+        <div class="panel panel-default conversation-panel">
+          <div class="panel-heading">
+            New Coaching Conversation
+          </div>
+          <div class="panel-body">
+            <form>
+              <div class="form-group">
+                <p>What would you like help thinking about?</p>
+                <textarea class="form-control" title="Topic"> </textarea>
+              </div>
+
+              <button class="btn btn-sm btn-primary new-conversation"
+                      type="button">Send
+              </button>
+            </form>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
