@@ -16,44 +16,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Crispy Tatertot.  If not, see <http://www.gnu.org/licenses/>.
  */
+function module(R) {
+  return {
+    "generateNavigationHash": function (args) {
+      var panel = args.panel,
+          hashArguments = R.dissoc('panel', args),
+          hashArgList = R.map(function (key) {
+            return key + "_" + hashArguments[key];
+          }, R.keys(hashArguments));
+      return R.join(",", R.prepend(panel, hashArgList));
+    },
 
-body {
-  padding-top: 70px;
-  font-family: "Cabin", sans-serif;
+    "parseNavigationHash": function (rawHash) {
+      var hash = rawHash.substr(1).split(","),
+          newData = R.fromPairs(R.map(R.partial(R.split, "_"), R.tail(hash)));
+
+      return {panel: hash[0], data: newData};
+    }
+  };
 }
 
-h1 {
-  font-family: "Lusitana", serif;
-}
-
-#home-panel h1 {
-  text-align: center;
-}
-
-label.error, input.error {
-  color: red;
-}
-
-input.error {
-  border-color: red;
-}
-
-.panel-heading {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-@media (max-width: 766px) {
-  .jumbotron {
-    padding: 20px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .main-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
+define(["ramda"], module);

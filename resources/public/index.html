@@ -32,36 +32,9 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top" style="display:none">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed"
-              data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-              aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Courage Labs</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active home-nav"><a href="#home">Home</a></li>
-
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li id="logout-btn" style="display:none"><a
-            href="#">Logout</a></li>
-        <li id="login-btn" style="display:none"><a
-            href="#">Login</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<div class="get-notified container">
+<div class="core-panel container" id="home-panel" style="display:none">
   <h1>Courage Labs, LLC</h1>
+
   <div class="main-content">
     <div id="notify" class="panel panel-default">
       <div class="panel-heading">
@@ -69,20 +42,22 @@
       </div>
       <div class="panel-body">
 
-      <p>
-        We're building the next generation of asynchronous text-based
-        coaching.
-        Interested in trying it out?
-      </p>
+        <p>
+          We're building the next generation of asynchronous text-based
+          coaching.
+          Interested in trying it out?
+        </p>
 
-      <form id="notify-form">
-        <div class="form-group">
-          <input type="text" class="form-control" name="emailAddress" id="email"
-                 placeholder="Email">
-        </div>
-        <button id="notifyBtn" type="submit"
-                class="btn btn-lg btn-primary">Notify Me</button>
-      </form>
+        <form id="notify-form">
+          <div class="form-group">
+            <input type="text" class="form-control" name="emailAddress"
+                   id="email"
+                   placeholder="Email">
+          </div>
+          <button id="notifyBtn" type="submit"
+                  class="btn btn-lg btn-primary">Notify Me
+          </button>
+        </form>
       </div>
     </div>
 
@@ -94,6 +69,41 @@
         We'll let you know when we are up and running.
       </div>
     </div>
+  </div>
+</div>
+
+<div id="coaching-panel" class="core-panel" style="display:none">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Courage Labs</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active home-nav"><a href="#home">Home</a></li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li id="logout-btn" style="display:none"><a
+              href="#">Logout</a></li>
+          <li id="login-btn" style="display:none"><a
+              href="#">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    Main Coaching Panel
   </div>
 </div>
 

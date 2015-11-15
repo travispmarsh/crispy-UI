@@ -80,9 +80,11 @@ function module($, navigator) {
     "load": load,
     "login": function () {
       navigator.id.request();
+      return false;
     },
     "logout": function () {
       navigator.id.logout();
+      return false;
     }
   };
 }

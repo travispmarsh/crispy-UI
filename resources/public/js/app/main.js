@@ -17,7 +17,7 @@
  * along with Crispy Tatertot.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function main($, R, v, getNotified, auth) {
+function main($, R, v, getNotified, auth, routing) {
   var emailSelector = "#email";
 
   function authView() {
@@ -26,11 +26,11 @@ function main($, R, v, getNotified, auth) {
 
     auth.load({
       login: function (currentUser) {
-        v.hideThenShow(loginBtnSelector, logoutBtnSelector,
-            R.partial(v.setValue, "#email", currentUser));
+        v.hideThenShow(loginBtnSelector, logoutBtnSelector);
+        return false;
       },
       logout: R.partial(v.hideThenShow, logoutBtnSelector,
-          loginBtnSelector, R.partial(v.setValue, emailSelector, '')),
+          loginBtnSelector),
       fail: v.critFail
     });
 
@@ -59,6 +59,8 @@ function main($, R, v, getNotified, auth) {
 
   authView();
   notifyView();
+  routing.triggerNavigation();
 }
 
-require(["jquery", "ramda", "app/viewFn", "app/getNotified", "app/auth"], main);
+require(["jquery", "ramda", "app/viewFn", "app/getNotified",
+  "app/auth", "app/routing"], main);
