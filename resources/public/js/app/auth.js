@@ -22,12 +22,18 @@ function module($, navigator) {
       sessionUrl = '/api/v1/session';
 
   function load(loginCallback, logoutCallback) {
+    function onLogin(user) {
+      currentUser = user;
+      loginCallback(user);
+    }
+
     function onLogout() {
       currentUser = null;
       logoutCallback();
     }
 
     $.ajax({url: sessionUrl}).always(function (data, status, err) {
+
       if (status === "success") {
         onLogin(data);
       } else if (data.status !== 404) {
@@ -39,10 +45,6 @@ function module($, navigator) {
       navigator.id.watch({
         loggedInUser: currentUser,
         onlogin: function (assertion) {
-          function onLogin(user) {
-            this.loggedInUser = currentUser = user;
-            loginCallback(user);
-          }
 
           $.ajax({
             /* <-- This example uses jQuery, but you can use whatever you'd like */
@@ -50,7 +52,8 @@ function module($, navigator) {
             url: sessionUrl, // This is a URL on your website.
             data: {assertion: assertion},
             success: function (res, status, xhr) {
-              loginCallback(res);
+              onLogin(res);
+              loggedInUser = res;
             },
             error: function (xhr, status, err) {
               navigator.id.logout();
