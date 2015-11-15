@@ -21,15 +21,15 @@ function module($, navigator) {
   var currentUser = null,
       sessionUrl = '/api/v1/session';
 
-  function load(loginCallback, logoutCallback) {
+  function load(data) {
     function onLogin(user) {
       currentUser = user;
-      loginCallback(user);
+      data.login(user);
     }
 
     function onLogout() {
       currentUser = null;
-      logoutCallback();
+      data.logout();
     }
 
     $.ajax({url: sessionUrl}).always(function (data, status, err) {

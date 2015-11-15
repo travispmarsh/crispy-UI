@@ -18,33 +18,17 @@
  */
 
 function module($) {
-  function submitNotification() {
-    $("#notifyBtn").attr("disabled", true);
-
-    var emailAddress = $("#email").val();
+  function submitNotification(data) {
+    data.started();
     $.ajax({
       method: "post",
       url: "/api/v1/getnotified",
-      data: {email: emailAddress}
-    }).done(function (result) {
-      $("#notify").hide(0, function () {
-        $("#notify-success").show(0);
-      });
-    }).fail(function () {
-      $("#notifyBtn").attr("disabled", false);
-      alert("Sorry, but we were unable to complete your request. Please try again later.");
-    });
+      data: {email: data.fetchEmail}
+    }).done(data.success).fail(data.fail);
     return false;
   }
 
-  return {
-    "load": function () {
-      $("#notify-form").validate({
-        submitHandler: submitNotification,
-        rules: {emailAddress: {required: true, email: true}}
-      });
-    }
-  };
+  return {"submitNotification": submitNotification};
 }
 
 define(["jquery", "jquery.validate"], module);

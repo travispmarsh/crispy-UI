@@ -17,30 +17,47 @@
  * along with Crispy Tatertot.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function main($, getNotified, auth) {
-  function onLogout() {
-    $('#logout-btn').hide(0);
-    $('#login-btn').show(0);
-    $("#email").val('');
+function main($, R, v, getNotified, auth) {
+  var emailSelector = "#email";
+
+  function authView() {
+    var logoutBtnSelector = "#logout-btn",
+        loginBtnSelector = "#login-btn";
+
+    auth.load({
+      login: function (currentUser) {
+        v.hideThenShow(loginBtnSelector, logoutBtnSelector,
+            R.partial(v.setValue, "#email", currentUser));
+      },
+      logout: R.partial(v.hideThenShow, logoutBtnSelector,
+          loginBtnSelector, R.partial(v.setValue, emailSelector, ''))
+    });
+
+    v.onClick(loginBtnSelector, R.partial(auth.login));
+    v.onClick(logoutBtnSelector,
+        v.confirmed("Are you sure you want to log out?",
+            R.partial(auth.logout)));
   }
 
-  function onLogin(currentUser) {
-    $('#logout-btn').show(0);
-    $('#login-btn').hide(0);
-    $("#email").val(currentUser);
+  function notifyView() {
+    var notifyBtnSelector = "#notifyBtn";
+
+    $("#notify-form").validate({
+      submitHandler: R.partial(getNotified.submitNotification,
+          {
+            fetchEmail: R.partial(v.getValue, emailSelector),
+            started: R.partial(v.disabled, notifyBtnSelector, true),
+            success: R.partial(v.hideThenShow, "#notify", "#notify-success"),
+            failed: R.partial(v.critFailed("Sorry, but we were unable to " +
+                "complete your request. Please try again later."),
+                R.partial(v.disabled, notifyBtnSelector, false))
+          }),
+      rules: {emailAddress: {required: true, email: true}}
+    });
   }
 
-  getNotified.load();
-
-  auth.load(onLogin, onLogout);
-
-  $('#login-btn').click(function () {
-    auth.login();
-  });
-
-  $('#logout-btn').click(function () {
-    auth.logout();
-  });
+  authView();
+  notifyView();
 }
 
-require(["jquery", "app/getNotified", "app/auth"], main);
+require(["jquery", "ramda", "app/viewFn", "app/getNotified", "app/auth"], main);
