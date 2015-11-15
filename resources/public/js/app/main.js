@@ -30,7 +30,8 @@ function main($, R, v, getNotified, auth) {
             R.partial(v.setValue, "#email", currentUser));
       },
       logout: R.partial(v.hideThenShow, logoutBtnSelector,
-          loginBtnSelector, R.partial(v.setValue, emailSelector, ''))
+          loginBtnSelector, R.partial(v.setValue, emailSelector, '')),
+      fail: v.critFail
     });
 
     v.onClick(loginBtnSelector, R.partial(auth.login));

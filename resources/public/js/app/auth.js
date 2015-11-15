@@ -32,54 +32,45 @@ function module($, navigator) {
       data.logout();
     }
 
-    $.ajax({url: sessionUrl}).always(function (data, status, err) {
-
+    $.ajax({url: sessionUrl}).always(function (result, status, err) {
       if (status === "success") {
-        onLogin(data);
-      } else if (data.status !== 404) {
-        console.log("Error connecting", {data: data, status: status, err: err});
-        alert("Admin API is currently down.");
+        onLogin(result);
+      } else if (result.status !== 404) {
+        console.log("Error connecting",
+            {result: result, status: status, err: err});
+        data.fail("Server connection failed. Please try again later.");
         return false;
       }
 
       navigator.id.watch({
         loggedInUser: currentUser,
         onlogin: function (assertion) {
-
           $.ajax({
-            /* <-- This example uses jQuery, but you can use whatever you'd like */
-            type: 'POST',
-            url: sessionUrl, // This is a URL on your website.
-            data: {assertion: assertion},
+            type: 'POST', url: sessionUrl, data: {assertion: assertion},
             success: function (res, status, xhr) {
               onLogin(res);
               this.loggedInUser = res;
             },
             error: function (xhr, status, err) {
               navigator.id.logout();
-              alert("Login failure: " + err);
+              data.fail("Unable to login. Please try again later.");
             }
           });
         },
         onlogout: function () {
-          // A user has logged out! Here you need to:
-          // Tear down the user's session by redirecting the user or making a call to your backend.
-          // Also, make sure loggedInUser will get set to null on the next page load.
-          // (That's a literal JavaScript null. Not false, 0, or undefined. null.)
           $.ajax({
-            type: 'DELETE',
-            url: sessionUrl, // This is a URL on your website.
+            type: 'DELETE', url: sessionUrl,
             success: function (res, status, xhr) {
               onLogout();
             },
             error: function (xhr, status, err) {
-              alert("Logout failure: " + err);
+              data.fail("Unable to logout. Please try again later.");
             }
           });
         }
       });
 
-      if (data.status === 404) {
+      if (result.status === 404) {
         onLogout();
       }
     });

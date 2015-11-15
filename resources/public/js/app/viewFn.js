@@ -47,10 +47,16 @@ function module($, R) {
     };
   }
 
+  function critFail(msg) {
+    alert(msg);
+  }
+
   function critFailed(msg, fn) {
     return function () {
-      alert(msg);
-      fn();
+      critFail(msg);
+      if (fn) {
+        fn();
+      }
     }
   }
 
@@ -65,6 +71,7 @@ function module($, R) {
     "setValue": setValue,
     "setAttr": setAttr,
     "onClick": onClick,
+    "critFail": critFail,
     "confirmed": confirmed,
     "critFailed": critFailed
   };
