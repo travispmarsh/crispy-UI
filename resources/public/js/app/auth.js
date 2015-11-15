@@ -53,7 +53,7 @@ function module($, navigator) {
             data: {assertion: assertion},
             success: function (res, status, xhr) {
               onLogin(res);
-              loggedInUser = res;
+              this.loggedInUser = res;
             },
             error: function (xhr, status, err) {
               navigator.id.logout();
