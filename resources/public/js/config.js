@@ -27,10 +27,10 @@ requirejs.config({
     "jquery.validate": "//cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min",
     "jquery.migrate": "//code.jquery.com/jquery-migrate-1.2.1.min",
     "persona": (function(){
-      if (window.ENV === 'production') {
-        return "//login.persona.org/include";
+      if (window.ENV === 'dev') {
+        return "//rawgit.com/toolness/stubbyid/gh-pages/stubbyid";
       } else {
-        return "//rawgit.com/toolness/stubbyid/gh-pages/stubbyid"
+        return "//login.persona.org/include";
       }
     }())
   },

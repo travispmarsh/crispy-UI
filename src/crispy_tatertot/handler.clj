@@ -85,14 +85,14 @@
           :return String
           :form-params [assertion :- String]
           :summary "Establish a session"
-               (if (= environment "production")
+               (if (= environment "dev")
+                 (sign-user-in session assertion)
+
                  (let [{:keys [email] :as response}
                        (persona/verify-assertion assertion audience)]
                    (if (persona/valid? response)
                      (sign-user-in session email)
-                     (unauthorized)))
-
-                 (sign-user-in session assertion)))
+                     (unauthorized)))))
 
         (DELETE* "/" []
           :summary "Destroy the current session, if it exists"
