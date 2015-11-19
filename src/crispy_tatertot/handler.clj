@@ -56,8 +56,7 @@
 (defn sign-user-in
   [session email]
   (merge {:session (assoc session ::identity {:emailAddress email})}
-         (ok email))
-  )
+         (ok email)))
 
 (defapi app
   (swagger-ui "/swagger-ui"
