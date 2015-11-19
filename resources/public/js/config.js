@@ -26,7 +26,13 @@ requirejs.config({
     "ramda": "//cdnjs.cloudflare.com/ajax/libs/ramda/0.10.0/ramda.min",
     "jquery.validate": "//cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min",
     "jquery.migrate": "//code.jquery.com/jquery-migrate-1.2.1.min",
-    "persona": "//login.persona.org/include"
+    "persona": (function(){
+      if (window.ENV === 'production') {
+        return "//login.persona.org/include";
+      } else {
+        return "//rawgit.com/toolness/stubbyid/gh-pages/stubbyid"
+      }
+    }())
   },
   "shim": {
     "bootstrap": {

@@ -151,6 +151,7 @@
 
 <script src="js/lib/require.js"></script>
 <script>
+  window.ENV = 'production';
   require(['js/config'], function () {
     require(['app/main'])
   });
