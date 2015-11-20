@@ -45,11 +45,18 @@
 
 (def audience (env "PERSONA_AUDIENCE" "http://localhost:3000"))
 
+(def environment (env "CRISPY_ENV" "production"))
+
 (defn wrap-dir-index [handler]
   (fn [req]
     (handler
       (update-in req [:uri]
                  #(if (= "/" %) "/index.html" %)))))
+
+(defn sign-user-in
+  [session email]
+  (merge {:session (assoc session ::identity {:emailAddress email})}
+         (ok email)))
 
 (defapi app
   (swagger-ui "/swagger-ui"
@@ -78,13 +85,14 @@
           :return String
           :form-params [assertion :- String]
           :summary "Establish a session"
-          (let [{:keys [email] :as response}
-                (persona/verify-assertion assertion audience)]
+               (if (= environment "dev")
+                 (sign-user-in session assertion)
 
-            (if (persona/valid? response)
-              (merge {:session (assoc session ::identity {:emailAddress email})}
-                     (ok email))
-              (unauthorized))))
+                 (let [{:keys [email] :as response}
+                       (persona/verify-assertion assertion audience)]
+                   (if (persona/valid? response)
+                     (sign-user-in session email)
+                     (unauthorized)))))
 
         (DELETE* "/" []
           :summary "Destroy the current session, if it exists"
