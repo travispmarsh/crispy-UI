@@ -10,9 +10,7 @@ A program to facilitate secure, motivational internet conversations.
 
 ```
 brew install docker docker-machine
-docker-machine create -d virtualbox dev
-eval "$(docker-machine env dev)"
-export DEV_HOST=`docker-machine ip dev`
+docker-machine create -d virtualbox dev # or use "start" post-create
 docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw \
   -e MYSQL_DATABASE=taters -e MYSQL_USER=tater_dev \
   -e MYSQL_PASSWORD=password -p 3306:3306 -d mysql:latest
@@ -22,14 +20,23 @@ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw \
 ### Database setup
 ```
 brew install mysql
-mysql -h $DEV_HOST -u tater_dev -p taters
-CREATE DATABASE taters DEFAULT CHARACTER SET 'utf8';
-GRANT ALL on taters.* TO tater_dev@'localhost' IDENTIFIED BY 'password';
 ```
 
 ### Run the application locally with auto-reload
 
-`lein ring server`
+```
+eval "$(docker-machine env dev)"
+export DEV_HOST=`docker-machine ip dev`
+export TATER_DB_URL=jdbc:mysql://$DEV_HOST/taters
+lein ring server
+```
+
+### Connect to the database locally
+```
+eval "$(docker-machine env dev)"
+export DEV_HOST=`docker-machine ip dev`
+mysql -h $DEV_HOST -u tater_dev -p taters
+```
 
 ### Packaging and running as standalone jar like Heroku does
 Install the [Heroku Toolbelt](https://toolbelt.heroku.com/), then:
