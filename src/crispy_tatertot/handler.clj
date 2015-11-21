@@ -22,6 +22,7 @@
             [compojure.api.sweet :refer :all]
             [compojure.handler :refer [site]]
             [compojure.route :as r]
+            [crispy-tatertot.db :as db]
             [org.httpkit.server :as srv]
             [persona-kit.persona :as persona]
             [ring.middleware.session :as session]
@@ -47,6 +48,13 @@
 
 (def environment (env "CRISPY_ENV" "production"))
 
+(def datasource
+  (delay
+    (db/make-db-datasource
+      (env "TATER_DB_URL" "jdbc:mysql://localhost/taters")
+      (env "TATER_DB_USER" "tater_dev")
+      (env "TATER_DB_PASS" "password"))))
+
 (defn wrap-dir-index [handler]
   (fn [req]
     (handler
@@ -60,8 +68,9 @@
 
 (defapi app
   (swagger-ui "/swagger-ui"
-    :swagger-docs "/swagger-docs")
-  (swagger-docs "/swagger-docs"
+              :swagger-docs "/swagger-docs")
+  (swagger-docs
+    "/swagger-docs"
     {:info {:title       "Crispy Tater Tots' API"
             :description "Secure coaching communications over the internet"}
      :tags [{}]})
@@ -76,7 +85,8 @@
         (GET* "/" {:keys [session]}
           :return String
           :summary "Get user associated with current session"
-          (let [identity (::identity session)]
+          (let [identity (::identity session)
+                _ @datasource]
             (if identity
               (ok (:emailAddress identity))
               (not-found))))
@@ -85,14 +95,14 @@
           :return String
           :form-params [assertion :- String]
           :summary "Establish a session"
-               (if (= environment "dev")
-                 (sign-user-in session assertion)
+          (if (= environment "dev")
+            (sign-user-in session assertion)
 
-                 (let [{:keys [email] :as response}
-                       (persona/verify-assertion assertion audience)]
-                   (if (persona/valid? response)
-                     (sign-user-in session email)
-                     (unauthorized)))))
+            (let [{:keys [email] :as response}
+                  (persona/verify-assertion assertion audience)]
+              (if (persona/valid? response)
+                (sign-user-in session email)
+                (unauthorized)))))
 
         (DELETE* "/" []
           :summary "Destroy the current session, if it exists"

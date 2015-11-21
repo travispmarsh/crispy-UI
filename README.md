@@ -6,6 +6,27 @@ A program to facilitate secure, motivational internet conversations.
 
 ## Usage
 
+### Setup Docker (Mac)
+
+```
+brew install docker docker-machine
+docker-machine create -d virtualbox dev
+eval "$(docker-machine env dev)"
+export DEV_HOST=`docker-machine ip dev`
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+  -e MYSQL_DATABASE=taters -e MYSQL_USER=tater_dev \
+  -e MYSQL_PASSWORD=password -p 3306:3306 -d mysql:latest
+
+```
+
+### Database setup
+```
+brew install mysql
+mysql -h $DEV_HOST -u tater_dev -p taters
+CREATE DATABASE taters DEFAULT CHARACTER SET 'utf8';
+GRANT ALL on taters.* TO tater_dev@'localhost' IDENTIFIED BY 'password';
+```
+
 ### Run the application locally with auto-reload
 
 `lein ring server`
