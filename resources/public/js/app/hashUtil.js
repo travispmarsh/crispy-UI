@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Crispy Tatertot.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 function module(R) {
   return {
     "generateNavigationHash": function (args) {

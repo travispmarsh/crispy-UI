@@ -22,7 +22,6 @@ function main($, R, v, getNotified, auth, routing) {
 
   function authView() {
     var logoutBtnSelector = "#logout-btn",
-        loginBtnSelector = "#login-btn",
         loggedInVisibleSelector = ".logged-in-visible",
         loggedOutVisibleSelector = ".logged-out-visible";
 

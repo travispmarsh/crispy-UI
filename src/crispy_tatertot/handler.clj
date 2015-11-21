@@ -18,14 +18,14 @@
 ;
 
 (ns crispy-tatertot.handler
-  (:require [compojure.api.sweet :refer :all]
+  (:require [clj-slack.chat :as chat]
+            [compojure.api.sweet :refer :all]
             [compojure.handler :refer [site]]
             [compojure.route :as r]
             [org.httpkit.server :as srv]
+            [persona-kit.persona :as persona]
             [ring.middleware.session :as session]
-            [ring.util.http-response :refer :all]
-            [clj-slack.chat :as chat]
-            [crispy-tatertot.persona :as persona])
+            [ring.util.http-response :refer :all])
   (:gen-class))
 
 (defn env-or [key f]
