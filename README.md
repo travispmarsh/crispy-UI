@@ -11,9 +11,9 @@ A program to facilitate secure, motivational internet conversations.
 ```
 brew install docker docker-machine
 docker-machine create -d virtualbox dev # or use "start" post-create
-docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw \
-  -e MYSQL_DATABASE=taters -e MYSQL_USER=tater_dev \
-  -e MYSQL_PASSWORD=password -p 3306:3306 -d mysql:latest
+cd docker/taters-db
+docker build -t taters-db .
+docker run --name taters-db -p 3306:3306 -d taters-db
 
 ```
 
