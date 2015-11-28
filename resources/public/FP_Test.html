@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Courage Labs</title>
+    <link href='https://fonts.googleapis.com/css?family=Lusitana|Cabin:400,700'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link href="css/theme.css" type="text/css" rel="stylesheet"/>
+
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="css/chat.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed"
+                        data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false"
+                        aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Courage Labs</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active home-nav"><a href="#home">Home</a></li>
+                    <!--This is just a link to nowhere at the moment-->
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="logout-btn" class="logged-in-visible" style="display:none"><a
+                            href="#">Logout</a></li>
+                    <li id="login-btn" class="logged-out-visible login"
+                        style="display:none"><a href="#">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="main-content">
+        <form class="form-group">
+            <div class="h1">Get Help from a Coach Now</div>
+            <textarea class="form-control" rows="5" id="initial_input" placeholder="Ask our coaches anything you would like"></textarea>
+            <button type="button" class="btn btn-default text-center center-block" id="chat_now">Chat Now</button>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

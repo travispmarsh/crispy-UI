@@ -17,7 +17,7 @@
  * along with Crispy Tatertot.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function main($, R, v, getNotified, auth, routing) {
+function main($, R, v, getNotified, auth, routing, chat) {
   var emailSelector = "#email";
 
   function authView() {
@@ -62,4 +62,4 @@ function main($, R, v, getNotified, auth, routing) {
 }
 
 require(["jquery", "ramda", "app/viewFn", "app/getNotified",
-  "app/auth", "app/routing", "jquery.validate"], main);
+  "app/auth", "app/routing", "jquery.validate", "app/chat"], main);

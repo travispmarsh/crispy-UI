@@ -1,0 +1,61 @@
+.message{
+    padding:10px;
+    border-style: solid;
+    margin: 4px;
+    border-radius: 6px;
+    border-width: 1px;
+    max-width: 80%;
+    clear: both;
+    /*padding=6px;*/
+}
+
+.coach_message{
+    float: left;
+    background-color: #a6e1ec;
+}
+
+.client_message{
+    background-color: #67b168;
+    float: right;
+}
+
+/*This doesn't appear to do anything useful but I want it to*/
+/*This is for the div that contains the chat*/
+.full_height{
+    height: 100%;
+    overflow-y: scroll;
+    overflow-scrolling: auto;
+}
+
+.clear{
+    clear:both;
+}
+
+.full_width{
+    width:100%
+}
+#comment{
+    float:left;
+    position:relative;
+
+}
+
+#send{
+    float:right;
+    position:relative;
+
+}
+.no-gutter{
+    padding-right:0;
+    padding-left:0;
+}
+
+#chat_now{
+    margin-top: 10px;
+    /*width:;*/
+    height: 50px;
+    font-size: 170%;
+}
+ html, body {
+     height:100%;
+ }
