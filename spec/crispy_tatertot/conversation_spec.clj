@@ -29,12 +29,12 @@
   (after-all (jdbc/execute! {:datasource @datasource} ["drop all objects"]))
 
   (describe "Simple conversation"
-    (with owner-email "test@place.com")
-    (with owner-msg "Hi there")
-    (with guest-email "coach@elsewhere.net")
-    (with guest-msg "Why hello!")
+    (with-all owner-email "test@place.com")
+    (with-all owner-msg "Hi there")
+    (with-all guest-email "coach@elsewhere.net")
+    (with-all guest-msg "Why hello!")
 
-    (with conversation
+    (with-all conversation
           (-> (conv/create-conversation @datasource @owner-email)
               (conv/add-participant @datasource @guest-email)
               (conv/send-message @datasource @owner-email @owner-msg)
@@ -46,12 +46,12 @@
                (conv/list-messages @conversation @datasource)))
 
     (describe "Second conversation"
-      (with owner-email2 "something@place.com")
-      (with owner-msg2 "Yo")
-      (with guest-email2 "gentleman@elsewhere.net")
-      (with guest-msg2 "Sup?")
+      (with-all owner-email2 "something@place.com")
+      (with-all owner-msg2 "Yo")
+      (with-all guest-email2 "gentleman@elsewhere.net")
+      (with-all guest-msg2 "Sup?")
 
-      (with conversation2
+      (with-all conversation2
             (-> (conv/create-conversation @datasource @owner-email2)
                 (conv/add-participant @datasource @guest-email2)
                 (conv/send-message @datasource @owner-email2 @owner-msg2)
