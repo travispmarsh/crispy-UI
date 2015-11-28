@@ -69,9 +69,9 @@
   (s/validate Conversation conversation)
   (jdbc/execute! conn
                  ["INSERT INTO CONVERSATION_PARTICIPANTS
-                             (user_id, conversation_id, level_id)
-                             (SELECT ?, ?, id FROM PARTICIPATION_LEVELS
-                             WHERE NAME = ?)"
+                   (user_id, conversation_id, level_id)
+                   (SELECT ?, ?, id FROM PARTICIPATION_LEVELS
+                    WHERE NAME = ?)"
                   (:id user) (:id conversation) level])
   conversation)
 
