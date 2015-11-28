@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <![endif]-->
+    <title>Courage Labs Chat Example</title>
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="css/chat.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body style="font-family:Verdana">
+<div class="container-fluid no-gutter">
+    <div class="">
+        Toolbar
+    </div>
+    <!--This will be the chat div-->
+    <div class="full_height">
+        <div id="insertable">
+
+            <!--This will be for an individual message-->
+            <div class="message coach_message">
+                Kickstarter try-hard kogi heirloom venmo. Ramps fap echo park put a bird on it dreamcatcher, ugh
+                tattooed waistcoat four dollar toast intelligentsia. Viral gentrify direct trade salvia brooklyn. Trust
+                fund bespoke lomo, fingerstache ennui swag seitan next level tumblr heirloom keffiyeh meggings plaid
+                migas. Selfies before they sold out hoodie, pickled forage
+            </div>
+            <!--This will be for the send box-->
+            <div class="message client_message">
+                Some response from the client
+
+            </div>
+            <div class="message coach_message">
+                XOXO photo booth fashion axe pug hashtag chicharrones flannel master cleanse. Asymmetrical green juice
+                etsy, VHS tattooed +1 austin raw denim semiotics biodiesel blue bottle direct trade. Kickstarter disrupt
+                ramps fap, keffiyeh ethical semiotics mlkshk chartreuse tousled artisan flannel williamsburg tattooed
+                shabby chic.
+            </div>
+            <!--This will be for the send box-->
+            <div class="message client_message">
+                Some response from the client
+
+            </div>
+            <div class="message coach_message">
+                Some initial text
+            </div>
+            <!--This will be for the send box-->
+            <div class="message client_message">
+                Street art PBR&B drinking vinegar chillwave kinfolk, cray seitan vice jean shorts ennui photo booth
+                shabby chic iPhone bicycle rights. Tumblr pabst shabby chic, typewriter banjo seitan normcore ugh
+                chartreuse echo park tote bag cold-pressed occupy plaid humblebrag. Letterpress fingerstache mumblecore
+                DIY, intelligentsia lomo chambray schlitz tilde single-origin coffee vegan
+
+            </div>
+            <div class="message coach_message">
+                Some initial text
+            </div>
+            <!--This will be for the send box-->
+            <div class="message client_message">
+                reegan artisan kale chips. Selvage neutra kogi migas blog keytar. Portland ennui flannel direct trade
+                drinking vinegar tacos. Heirloom mustache chia keytar vice. Kogi whatever ugh, four loko gentrify
+                church-key fap.
+
+            </div>
+            <div class="message coach_message">
+                Some initial text
+            </div>
+            <!--This will be for the send box-->
+            <div class="message client_message">
+                Cronut scenester ugh mumblecore, wayfarers four dollar toast VHS occupy roof party farm-to-table. Yuccie
+                pug salvia, cronut before they sold out taxidermy flexitarian hoodie seitan health goth bushwick
+                cornhole butcher ugh cray. Bicycle rights yuccie bespoke, deep v meditation ethical health goth
+                microdosing godard church-key portland poutine four dollar toast fingerstache austin. Stumptown four
+                dollar toast ramps, gastropub yuccie waistcoat distillery. Disrupt actually chicharrones twee.
+            </div>
+
+            <!--This will be for the send box-->
+
+        </div>
+        <!--Text Submit Area-->
+        <div class="clear">
+        </div>
+        <form role="form">
+            <div class="form-group">
+
+                <textarea class="form-control" rows="5" id="comment"
+                          placeholder="Write your coach a message"></textarea>
+                <button type="button" class="btn btn-default" id="send">Send</button>
+                <button type="button" class="btn btn-default" id="insert_coach">Insert Coach</button>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script src="js/lib/require.js" ></script>
+<script>
+//    window.ENV = 'production';
+    require(['js/config'], function () {
+        require(['app/main'])
+    });
+</script>
+
+<!--<script src="js/app/chat.js"></script>-->
+</body>
+</html>
