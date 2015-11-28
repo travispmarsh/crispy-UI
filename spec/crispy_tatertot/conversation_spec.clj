@@ -65,5 +65,6 @@
                    :level  "participant"}]
                  (conv/list-messages @conversation2 @datasource)))
 
-      (describe "Listing user conversations"
-        (it "Should get a list of a user's conversations")))))
+      (describe "Showing conversations"
+        (it "Should get a list of a user's conversations")
+        (it "Should not be able to see conversation contents directly")))))
