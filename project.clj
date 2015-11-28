@@ -24,12 +24,13 @@
   :min-lein-version "2.0.0"
   :dependencies [[ch.qos.logback/logback-classic "1.1.3"]
                  [clj-time "0.9.0"] ; required due to bug in lein-ring
+                 [com.h2database/h2 "1.4.177"]
                  [com.zaxxer/HikariCP "2.4.1"]
                  [honeysql "0.6.2"]
                  [http-kit "2.1.18"]
                  [metosin/compojure-api "0.22.0"]
                  [mysql/mysql-connector-java "5.1.36"]
-                 [org.clojure/clojure "1.6.0"]
+                 [org.clojure/clojure "1.7.0"]
                  [org.clojure/java.jdbc "0.4.2"]
                  [org.clojure/tools.logging "0.3.1"]
                  [org.flywaydb/flyway-core "3.2.1"]

@@ -1,4 +1,3 @@
-# noinspection SqlNoDataSourceInspectionForFile
 CREATE TABLE users (
   id            MEDIUMINT    NOT NULL         AUTO_INCREMENT,
   email_address VARCHAR(255) NOT NULL,
@@ -59,7 +58,7 @@ CREATE TABLE conversation_participants (
   id              MEDIUMINT NOT NULL         AUTO_INCREMENT,
   user_id         MEDIUMINT NOT NULL,
   conversation_id MEDIUMINT NOT NULL,
-  level           MEDIUMINT NOT NULL,
+  level_id        MEDIUMINT NOT NULL,
   created_date    TIMESTAMP NOT NULL         DEFAULT CURRENT_TIMESTAMP,
   end_date        DATETIME,
   PRIMARY KEY (id)
@@ -67,7 +66,7 @@ CREATE TABLE conversation_participants (
   ENGINE = InnoDB;
 
 ALTER TABLE conversation_participants ADD CONSTRAINT fk_cp_levels FOREIGN KEY
-  (level) REFERENCES participation_levels (id);
+  (level_id) REFERENCES participation_levels (id);
 
 ALTER TABLE conversation_participants ADD CONSTRAINT fk_cp_users FOREIGN KEY
   (user_id) REFERENCES users (id);
@@ -95,7 +94,7 @@ ALTER TABLE participation_requests ADD CONSTRAINT un_usr_conv UNIQUE
 
 CREATE TABLE conversation_messages (
   id           MEDIUMINT NOT NULL AUTO_INCREMENT,
-  user_id      MEDIUMINT NOT NULL, -- Who wrote the message?
+  cp_id        MEDIUMINT NOT NULL, -- Who wrote the message?
   preq_id      MEDIUMINT, -- What Participation Request is this about?
   created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   message      BLOB,
@@ -103,8 +102,8 @@ CREATE TABLE conversation_messages (
 )
   ENGINE = InnoDB;
 
-ALTER TABLE conversation_messages ADD CONSTRAINT fk_cm_users FOREIGN KEY
-  (user_id) REFERENCES users (id);
+ALTER TABLE conversation_messages ADD CONSTRAINT fk_cm_part FOREIGN KEY
+  (cp_id) REFERENCES conversation_participants (id);
 
 ALTER TABLE conversation_messages ADD CONSTRAINT fk_cm_preq FOREIGN KEY
   (preq_id) REFERENCES participation_requests (id);
