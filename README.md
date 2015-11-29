@@ -10,7 +10,22 @@ A program to facilitate secure, motivational internet conversations.
 
 ```
 brew install docker docker-machine
-docker-machine create -d virtualbox dev # or use "start" post-create
+
+```
+docker-machine create -d virtualbox dev # 
+
+```
+or 
+```
+docker-machine start dev 
+
+```
+depending on whether or not you need to create it for the first time or start running your docker-machine
+```
+eval "$(docker-machine env dev)"
+export DEV_HOST=`docker-machine ip dev`
+export TATER_DB_URL=jdbc:mysql://$DEV_HOST/taters
+
 cd docker/taters-db
 docker build -t taters-db .
 docker run --name taters-db -p 3306:3306 -d taters-db
@@ -25,9 +40,6 @@ brew install mysql
 ### Run the application locally with auto-reload
 
 ```
-eval "$(docker-machine env dev)"
-export DEV_HOST=`docker-machine ip dev`
-export TATER_DB_URL=jdbc:mysql://$DEV_HOST/taters
 lein ring server
 ```
 
