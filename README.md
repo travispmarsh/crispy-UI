@@ -20,7 +20,7 @@ or
 docker-machine start dev 
 
 ```
-depending on whether or not you need to create it for the first time or start running your docker-machine
+depending on whether or not you need to create it for the first time or start running your docker-machine now
 ```
 eval "$(docker-machine env dev)"
 export DEV_HOST=`docker-machine ip dev`
